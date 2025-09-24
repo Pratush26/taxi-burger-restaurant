@@ -5,7 +5,7 @@ export default function NavBar () {
         <nav className="flex justify-around items-center text-sm font-semibold">
             <a href="./index.html"><img src={logo} alt="logo" className='h-8 object-contain' /></a>
             <span className='flex gap-3'>
-            <a href="#">Food</a>
+            <a href="#foodItems">Food</a>
             <a href="#">Login</a>
             </span>
         </nav>

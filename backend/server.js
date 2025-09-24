@@ -7,6 +7,19 @@ app.use(cors());
 app.use(express.json());
 
 // Get all categories
+app.get("/", (req, res) => {
+  res.json({ message: "API is running" });
+});
+
+app.get("/api/random", async (req, res) => {
+  try {
+    const data = await (await fetch("https://taxi-kitchen-api.vercel.app/api/v1/foods/random")).json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get("/api/categories", async (req, res) => {
   try {
     const data = await (await fetch("https://taxi-kitchen-api.vercel.app/api/v1/categories")).json();
