@@ -1,16 +1,12 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Simple test route
-app.get("/api/hello", (req, res) => {
-  res.json({ message: "Hello from Express backend!" });
-});
-
-// ✅ Fixed async route
+// Get all categories
 app.get("/api/categories", async (req, res) => {
   try {
     const data = await (await fetch("https://taxi-kitchen-api.vercel.app/api/v1/categories")).json();
@@ -20,6 +16,19 @@ app.get("/api/categories", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log("Backend running on http://localhost:5000");
+// Get single category by ID
+app.get("/api/categories/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await (await fetch(`https://taxi-kitchen-api.vercel.app/api/v1/categories/${id}`)).json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
+
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
